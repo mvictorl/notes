@@ -16,7 +16,7 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
         mkdocs.yml      # The configuration file
         docs/
             index.md    # The homepage.
-                ...     # Other markdown pages
+                ...     # Other markdown pages 
 
 ## Публикация в Github Pages
 
