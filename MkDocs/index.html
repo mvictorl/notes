@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>MkDocs - My Docs</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Welcome to MkDocs", url: "#_top", children: [
+              {title: "Commands", url: "#commands" },
+              {title: "Project layout", url: "#project-layout" },
+              {title: "\u041f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044f \u0432 Github Pages", url: "#github-pages" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../About/about/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../About/about/" class="btn btn-xs btn-link">
+        About
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="welcome-to-mkdocs">Welcome to <code>MkDocs</code></h1>
+<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
+<h2 id="commands">Commands</h2>
+<ul>
+<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
+<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
+<li><code>mkdocs build</code> - Build the documentation site.</li>
+<li><code>mkdocs -h</code> - Print help message and exit.</li>
+</ul>
+<h2 id="project-layout">Project layout</h2>
+<p>Для публикации на GitHub Pages структуру <code>mkdocs</code> лучше поместить внутрь подпапки:</p>
+<pre><code>mkdocs/
+    mkdocs.yml      # The configuration file
+    docs/
+        index.md    # The homepage.
+            ...     # Other markdown pages
+</code></pre>
+<h2 id="github-pages">Публикация в Github Pages</h2>
+<ol>
+<li>
+<p>Создать репозиторий вида <code>[имя_пользователя].github.io</code> (однократно, один для пользователя - корень web-сайта):
+<img alt="GitHub Pages Repositiry" src="../assets/img/create-repository-name-pages.webp" title="GitHub Pages Repositiry" width="500" /></p>
+<p>Любой из файлов <code>index.html</code>, <code>index.md</code> или <code>README.md</code> будет отображаться GitHub Pages, как стартовая страница web-сайта <code>https://[имя_пользователя].github.io</code></p>
+</li>
+<li>
+<p>В любом другом репозитории этого же пользователя можно создать папку <code>docs</code>, в которой можно разместить документацию, которая будет выводиться web-сервером по адресу <code>https://[имя_пользователя].github.io/[имя_репозитория]</code></p>
+</li>
+<li>
+<p>Для этого в Настройках (<code>Settings</code>) репозитория необходимо перейти в раздел <code>Pages</code>, настроить источник (Source) <code>Deploy from a branch</code>, задать исходную ветку, при обновлении которой будет опубликовано содержимое документации, и папку (<code>/</code> или <code>/docs</code>)</p>
+</li>
+<li>
+<p>Также можно задать (при наличии) свой домен для web-адреса (вместо <code>[имя_пользователя].github.io</code>) и протокол (<code>http</code> или <code>https</code>)</p>
+</li>
+<li>
+<p>Если в качестве источника (Source) выбрать <code>GitHub Actions</code>, то можно использовать различные способы автоматизации до публикации. Например, запускать контейнер, в котором будет собираться проект одностраничного web-сайта и после этого публиковаться в GitHub Pages.</p>
+</li>
+</ol>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../About/about/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../About/about/" class="btn btn-xs btn-link">
+        About
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href=".." class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href=".." class="btn btn-xs btn-link">
+        Home
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
