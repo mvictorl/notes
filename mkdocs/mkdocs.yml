@@ -2,6 +2,12 @@ site_name: My Docs
 theme: windmill
 nav:
   - Home: index.md
+  - MkDocs: MkDocs/index.md
   - About: 
-    - About: about.md
+    - About: About/about.md
     - Contact: About/contact.md
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+  
