@@ -5,5 +5,3 @@
 Image caption
 ///
 
-
-
