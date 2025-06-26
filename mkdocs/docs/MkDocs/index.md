@@ -16,7 +16,7 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
         mkdocs.yml      # The configuration file
         docs/
             index.md    # The homepage.
-                ...     # Other markdown pages 
+                ...     # Other markdown pages
 
 ## Публикация в Github Pages
 
@@ -32,3 +32,4 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 1. Также можно задать (при наличии) свой домен для web-адреса (вместо `[имя_пользователя].github.io`) и протокол (`http` или `https`)
 
 1. Если в качестве источника (Source) выбрать `GitHub Actions`, то можно использовать различные способы автоматизации до публикации. Например, запускать контейнер, в котором будет собираться проект одностраничного web-сайта и после этого публиковаться в GitHub Pages.
+
