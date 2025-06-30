@@ -32,7 +32,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Welcome to MkDocs", url: "#_top", children: [
+          {title: "Welcome to MkDocs (!)", url: "#_top", children: [
               {title: "Commands", url: "#commands" },
               {title: "Project layout", url: "#project-layout" },
               {title: "\u041f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044f \u0432 Github Pages", url: "#github-pages" },
@@ -83,7 +83,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="welcome-to-mkdocs">Welcome to <code>MkDocs</code></h1>
+    <h1 id="welcome-to-mkdocs">Welcome to <code>MkDocs</code> (!)</h1>
 <p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
 <h2 id="commands">Commands</h2>
 <ul>
@@ -104,8 +104,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ol>
 <li>
 <p>Создать репозиторий вида <code>[имя_пользователя].github.io</code> (однократно, один для пользователя - корень web-сайта):
-<img alt="GitHub Pages Repositiry" src="../assets/img/create-repository-name-pages.webp" title="GitHub Pages Repositiry" width="500" /></p>
-<p>Любой из файлов <code>index.html</code>, <code>index.md</code> или <code>README.md</code> будет отображаться GitHub Pages, как стартовая страница web-сайта <code>https://[имя_пользователя].github.io</code></p>
+    <img alt="GitHub Pages Repositiry" src="../assets/img/create-repository-name-pages.webp" title="GitHub Pages Repositiry" width="500" /></p>
+<pre><code>Любой из файлов `index.html`, `index.md` или `README.md` будет отображаться GitHub Pages, как стартовая страница web-сайта `https://[имя_пользователя].github.io`
+</code></pre>
 </li>
 <li>
 <p>В любом другом репозитории этого же пользователя можно создать папку <code>docs</code>, в которой можно разместить документацию, которая будет выводиться web-сервером по адресу <code>https://[имя_пользователя].github.io/[имя_репозитория]</code></p>
