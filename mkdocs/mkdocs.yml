@@ -1,13 +1,18 @@
 site_name: My Docs
+site_url: https://mvictorl.github.io/notes
+site_author: MVictorL
 theme: windmill
+cache: false
 nav:
-  - Home: index.md
+  - Home: "../"
+  - Notes: "index.md"
+  - Docker:
+      - multi-stage.md
   - MkDocs: MkDocs/index.md
-  - About: 
-    - About: About/about.md
-    - Contact: About/contact.md
+  - About:
+      - About: About/about.md
+      - Contact: About/contact.md
 markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.blocks.caption
-  
