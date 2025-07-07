@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="MVictorL">
+    <link rel="canonical" href="https://mvictorl.github.io/notes/Docker/multi-stage/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Using both development and production environments - My Docs</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Using both development and production environments", url: "#_top", children: [
+              {title: "1. Multi-stage Dockerfile:", url: "#1-multi-stage-dockerfile" },
+              {title: "2. Docker Compose Configuration:", url: "#2-docker-compose-configuration" },
+              {title: "3. Building for Different Environments:", url: "#3-building-for-different-environments" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="using-both-development-and-production-environments">Using both development and production environments</h1>
+<p>To manage Node.js applications in both development and production environments using Docker Compose and multi-stage Dockerfiles, the <code>target</code> property in <code>docker-compose.yml</code> is used to specify which stage of the <code>Dockerfile</code> to build.</p>
+<h2 id="1-multi-stage-dockerfile">1. Multi-stage <code>Dockerfile</code>:</h2>
+<p>First, a multi-stage <code>Dockerfile</code> is created with distinct stages for development and production.</p>
+<pre><code class="language-Dockerfile"># Dockerfile
+# Base stage
+FROM node:20-alpine AS base
+WORKDIR /app
+COPY package*.json ./
+
+# Development stage
+FROM base AS dev
+RUN npm install
+COPY . .
+CMD [&quot;npm&quot;, &quot;run&quot;, &quot;dev&quot;]
+
+# Production stage
+FROM base AS prod
+RUN npm ci --only=production
+COPY . .
+RUN npm run build # If you have a build step for production
+CMD [&quot;node&quot;, &quot;dist/index.js&quot;] # Adjust based on your build output
+</code></pre>
+<h2 id="2-docker-compose-configuration">2. Docker Compose Configuration:</h2>
+<p>Next, the <code>docker-compose.yml</code> file is configured to use the <code>target</code> property within the <code>build</code> section of the service definition.</p>
+<pre><code class="language-yml"># docker-compose.yml
+version: &quot;3.8&quot;
+
+services:
+  nodejs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${NODE_ENV:-dev} # Default to 'dev' if NODE_ENV is not set
+    ports:
+      - &quot;3000:3000&quot; # Example port mapping
+    volumes:
+      - .:/app # Mount for development, potentially remove or modify for production
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+</code></pre>
+<h2 id="3-building-for-different-environments">3. Building for Different Environments:</h2>
+<ul>
+<li><strong>Development:</strong> To build and run the development environment, the <code>NODE_ENV</code> environment variable is set to <code>dev</code> before running <code>docker compose up</code>.</li>
+</ul>
+<pre><code class="language-bash">NODE_ENV=dev docker compose up --build
+</code></pre>
+<p>This command will build the <code>dev</code> stage of the <code>Dockerfile</code> and mount the local source code into the container, allowing for live reloads or hot module replacement.</p>
+<ul>
+<li><strong>Production:</strong> To build and run the production environment, <code>NODE_ENV</code> is set to <code>prod</code>.</li>
+</ul>
+<pre><code class="language-bash">NODE_ENV=prod docker compose up --build
+</code></pre>
+<p>This command will build the <code>prod</code> stage, which typically includes optimizations like installing only production dependencies and running a build process for compiled assets. The volume mount might be removed or adjusted for production deployments to avoid accidental changes to the running container.</p>
+<p>By leveraging the <code>target</code> property and multi-stage builds, a single <code>Dockerfile</code> and <code>docker-compose.yml</code> can effectively manage both development and production environments for Node.js applications.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

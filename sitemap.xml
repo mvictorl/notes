@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://mvictorl.github.io/notes/</loc>
+         <lastmod>2025-07-07</lastmod>
+    </url>
+    <url>
+         <loc>https://mvictorl.github.io/notes/About/about/</loc>
+         <lastmod>2025-07-07</lastmod>
+    </url>
+    <url>
+         <loc>https://mvictorl.github.io/notes/About/contact/</loc>
+         <lastmod>2025-07-07</lastmod>
+    </url>
+    <url>
+         <loc>https://mvictorl.github.io/notes/Docker/multi-stage/</loc>
+         <lastmod>2025-07-07</lastmod>
+    </url>
+    <url>
+         <loc>https://mvictorl.github.io/notes/MkDocs/</loc>
+         <lastmod>2025-07-07</lastmod>
+    </url>
 </urlset>
