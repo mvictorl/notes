@@ -7,7 +7,6 @@ To manage Node.js applications in both development and production environments u
 First, a multi-stage `Dockerfile` is created with distinct stages for development and production.
 
 ```Dockerfile
-# Dockerfile
 # Base stage
 FROM node:20-alpine AS base
 WORKDIR /app
@@ -23,8 +22,8 @@ CMD ["npm", "run", "dev"]
 FROM base AS prod
 RUN npm ci --only=production
 COPY . .
-RUN npm run build # If you have a build step for production
-CMD ["node", "dist/index.js"] # Adjust based on your build output
+RUN npm run build               # If you have a build step for production
+CMD ["node", "dist/index.js"]   # Adjust based on your build output
 ```
 
 ## 2. Docker Compose Configuration:
