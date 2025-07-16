@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="MVictorL">
+    <link rel="canonical" href="https://mvictorl.github.io/notes/Docker/postgresql-multi-db/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Создание контейнера PostgreSQL с несколькими БД - My Docs</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "\u0421\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u043a\u043e\u043d\u0442\u0435\u0439\u043d\u0435\u0440\u0430 PostgreSQL \u0441 \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u0438\u043c\u0438 \u0411\u0414", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="postgresql">Создание контейнера PostgreSQL с несколькими БД</h1>
+<p>При создании контейнера PostgreSQL с помощью <code>yaml</code> файла Docker Compose переменная <code>POSTGRES_DB</code> из блока <code>environment</code> позволяет указать имя базы данных, которая будет создана на данном сервере. Однако, если понадобиться создать вторую (и более) БД, то стандартными средствами Docker Compose этого сделать не получится.</p>
+<p>В этом случае можно использовать инициализационные скрипты.</p>
+<p>Ниже пример <code>docker-compose.yaml</code> файла для создания контейнера PostgreSQL с несколькими БД:</p>
+<pre><code class="language-yaml">services:
+  {{ SERVICE_NAME }}-db:
+    image: postgres:latest
+    container_name: {{ CONTAINER_NAME }}
+    ports:
+        - 5432:5432
+    volumes:
+        - {{ VOLUME_NAME }}-data:/var/lib/postgresql/data
+        - ./init/create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+    environment:
+        POSTGRES_MULTIPLE_DATABASES: &quot;{{ DATABASE_1 }}, {{ DATABASE_2 }}, {{ DATABASE_3 }}&quot;
+        POSTGRES_USER: {{ DB_USER }}
+        POSTGRES_PASSWORD: {{ PASSWORD }}
+    networks:
+      - {{ NETWORK_NAME }}
+
+volumes:
+ {{ VOLUME_NAME }}-data:
+</code></pre>
+<p>Необходимо вписать в файл необходимые значения для шаблонов в двойных фигурных скобках.</p>
+<p>Имена баз данных задаются через запитую в переменной окружения <code>POSTGRES_MULTIPLE_DATABASES</code>.</p>
+<p>Эти значения будут подставлены в скрипт <code>create-multiple-postgresql-databases.sh</code>, который монтируется, как том (<code>volume</code>) к директории контейнера <code>/docker-entrypoint-initdb.d/</code>, которая предназначениа для пользовательских скриптов инициализации БД в контейнере Docker.</p>
+<p>Файлы скриптов (<code>*.sql</code>, <code>*.sql.gz</code> или <code>*.sh</code>) из этой директории будут выполнены, <strong>только</strong> если директория данных СУБД пуста.</p>
+<p>Ниже представлен скрипт <code>create-multiple-postgresql-databases.sh</code> для создания нескольких БД, имена которых содержатся с переменной окружения <code>POSTGRES_MULTIPLE_DATABASES</code>:</p>
+<pre><code class="language-sh">#!/bin/bash
+
+set -e
+set -u
+
+function create_database_grant_privilege() {
+        local database=$1
+        echo &quot;  Creating database '$database' and granting privileges to '$POSTGRES_USER'&quot;
+        psql -v ON_ERROR_STOP=1 --username &quot;$POSTGRES_USER&quot; &lt;&lt;-EOSQL
+            CREATE DATABASE $database;
+            GRANT ALL PRIVILEGES ON DATABASE $database TO $POSTGRES_USER;
+EOSQL
+}
+
+if [ -n &quot;$POSTGRES_MULTIPLE_DATABASES&quot; ]; then
+        echo &quot;Multiple database creation requested: $POSTGRES_MULTIPLE_DATABASES&quot;
+        for db in $(echo $POSTGRES_MULTIPLE_DATABASES | tr ',' ' '); do
+                create_database_grant_privilege $db
+        done
+        echo &quot;Multiple databases created&quot;
+fi
+</code></pre>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

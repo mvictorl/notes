@@ -60,8 +60,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>To manage Node.js applications in both development and production environments using Docker Compose and multi-stage Dockerfiles, the <code>target</code> property in <code>docker-compose.yml</code> is used to specify which stage of the <code>Dockerfile</code> to build.</p>
 <h2 id="1-multi-stage-dockerfile">1. Multi-stage <code>Dockerfile</code>:</h2>
 <p>First, a multi-stage <code>Dockerfile</code> is created with distinct stages for development and production.</p>
-<pre><code class="language-Dockerfile"># Dockerfile
-# Base stage
+<pre><code class="language-Dockerfile"># Base stage
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package*.json ./
@@ -76,8 +75,8 @@ CMD [&quot;npm&quot;, &quot;run&quot;, &quot;dev&quot;]
 FROM base AS prod
 RUN npm ci --only=production
 COPY . .
-RUN npm run build # If you have a build step for production
-CMD [&quot;node&quot;, &quot;dist/index.js&quot;] # Adjust based on your build output
+RUN npm run build               # If you have a build step for production
+CMD [&quot;node&quot;, &quot;dist/index.js&quot;]   # Adjust based on your build output
 </code></pre>
 <h2 id="2-docker-compose-configuration">2. Docker Compose Configuration:</h2>
 <p>Next, the <code>docker-compose.yml</code> file is configured to use the <code>target</code> property within the <code>build</code> section of the service definition.</p>
